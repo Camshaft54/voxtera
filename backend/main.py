@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000",
+    "http://localhost:3000"
 ]
 
 app.add_middleware(
@@ -25,5 +25,9 @@ def transcribe(file: UploadFile):
 
     print("Detected language '%s' with probability %f" % (info.language, info.language_probability))
 
+    text = []
     for segment in segments:
         print("[%.2fs -> %.2fs] %s" % (segment.start, segment.end, segment.text))
+        text.append(segment.text)
+    response = {"text": "\n".join(text)}
+    return response
