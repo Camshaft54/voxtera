@@ -1,6 +1,10 @@
 from faster_whisper import WhisperModel
 from fastapi import FastAPI, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
@@ -16,7 +20,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-model = WhisperModel("small.en", device="cpu", compute_type="int8")
+if os.getenv('USE_CUDA', 'false') == 'true':
+    logger.info("Using CUDA")
+    model = WhisperModel("small.en", device="cuda", compute_type="float16")
+else:
+    logger.info("Using CPU")
+    model = WhisperModel("small.en", device="cpu", compute_type="int8")
 
 
 @app.post("/transcribe")
