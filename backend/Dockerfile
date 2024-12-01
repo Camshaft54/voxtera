@@ -19,7 +19,6 @@ COPY . /app/
 
 EXPOSE 8000
 
-ENV USE_CUDA=true \
-    LD_LIBRARY_PATH=/usr/local/lib/python3.9/site-packages/nvidia/cublas/lib:/usr/local/lib/python3.9/site-packages/nvidia/cudnn/lib
+ENV LD_LIBRARY_PATH=/usr/local/lib/python3.9/site-packages/nvidia/cublas/lib:/usr/local/lib/python3.9/site-packages/nvidia/cudnn/lib
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

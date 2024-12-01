@@ -1,0 +1,18 @@
+---
+version: "3"
+services:
+  voxtera-backend:
+    image: voxtera-backend:latest
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    environment:
+      USE_CUDA: true
+    ports:
+      - "8000:8000"
+  voxtera-frontend:
+    image: voxtera-frontend:latest
+    environment:
+      VITE_API_ROOT_URL: "http://localhost:8000"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - voxtera-backend
