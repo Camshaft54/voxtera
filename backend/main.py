@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 import logging
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('uvicorn.error')
 
 app = FastAPI()
 
@@ -32,11 +32,11 @@ else:
 def transcribe(file: UploadFile):
     segments, info = model.transcribe(file.file, beam_size=5)
 
-    print("Detected language '%s' with probability %f" % (info.language, info.language_probability))
+    logger.debug("Detected language '%s' with probability %f" % (info.language, info.language_probability))
 
     text = []
     for segment in segments:
-        print("[%.2fs -> %.2fs] %s" % (segment.start, segment.end, segment.text))
+        logger.debug("[%.2fs -> %.2fs] %s" % (segment.start, segment.end, segment.text))
         text.append(segment.text)
     response = {"text": "\n".join(text)}
     return response
