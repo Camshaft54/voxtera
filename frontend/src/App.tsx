@@ -8,14 +8,18 @@ class App extends Component {
         transcript: null
     }
 
-    onFileSelect = (event: ChangeEvent) => {
-        if (!event.target) {
+    onFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
+        if (!event.target.files) {
             return
         }
         this.setState({selectedFile: event.target.files[0]})
     }
 
     onTranscribe = async () => {
+        if (!this.state.selectedFile) {
+            alert("Must choose a file to upload first!")
+            return
+        }
         const {text} = await sendAudio(this.state.selectedFile)
         this.setState({transcript: text})
     }
