@@ -13,7 +13,7 @@ RUN yarn run build
 
 FROM nginx:alpine
 
-COPY cert.pem key.pem cloudflare.crt /etc/ssl/cert.pem
+COPY cert.pem key.pem cloudflare.crt /etc/ssl/
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
