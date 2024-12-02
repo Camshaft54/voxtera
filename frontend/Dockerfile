@@ -23,8 +23,6 @@ RUN rm -rf ./*
 
 COPY --from=build_stage /app/dist .
 
-RUN ufw allow 'Nginx Full' && ufw reload
-
 EXPOSE 80 443
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
