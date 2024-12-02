@@ -1,14 +1,31 @@
-FROM node:lts-alpine
+FROM node:18-alpine AS build_stage
 
-WORKDIR /app/
+WORKDIR /app
 
-COPY package.json /app/
-COPY yarn.lock /app/
+COPY package.json yarn.lock ./
 
 RUN yarn install
 
-COPY . /app/
+COPY . .
 
-EXPOSE 3000
+RUN yarn run build
 
-CMD ["yarn", "dev", "--host", "0.0.0.0", "--port", "3000"]
+
+FROM nginx:alpine
+
+COPY cert.pem /etc/ssl/cert.pem
+COPY key.pem /etc/ssl/key.pem
+
+COPY nginx.conf /etc/nginx/nginx.conf
+
+WORKDIR /usr/share/nginx/html
+
+RUN rm -rf ./*
+
+COPY --from=build_stage /app/dist .
+
+RUN ufw allow 'Nginx Full' && ufw reload
+
+EXPOSE 80 443
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
