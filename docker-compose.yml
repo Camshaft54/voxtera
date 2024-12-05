@@ -3,9 +3,18 @@ services:
   voxtera-backend:
     image: voxtera-backend:v1
     environment:
-      USE_CUDA: false
+      USE_CUDA: true
     ports:
       - "8000:8000"
+    networks:
+      - voxtera_network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
   voxtera-frontend:
     image: voxtera-frontend:v1
     environment:
@@ -13,5 +22,11 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    networks:
+      - voxtera_network
     depends_on:
       - voxtera-backend
+
+networks:
+  voxtera_network:
+    driver: bridge
