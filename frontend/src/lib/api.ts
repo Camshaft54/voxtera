@@ -8,11 +8,12 @@ export type TranscribedFileResponse = {
 export const sendAudio = async (
     file: File
 ) => {
+    const api_endpoint = window.location.protocol + "//" + window.location.hostname + "/transcribe"
+    console.log(api_endpoint)
     const formData = new FormData()
     formData.append('file', file)
     console.log(file)
-    console.log(`${VITE_API_ROOT_URL}/transcribe`)
-    const response = await fetch(`${VITE_API_ROOT_URL}/transcribe`, {
+    const response = await fetch(api_endpoint, {
         method: 'POST',
         body: formData
     }).then(res => {
