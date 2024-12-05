@@ -9,7 +9,7 @@ logger = logging.getLogger('uvicorn.error')
 app = FastAPI()
 
 origins = [
-    "http://localhost", "https://voxtera.cameronshaw.me", "https://localhost:3000"
+    "http://localhost", "https://voxtera.cameronshaw.me", "https://localhost:3000", "https://localhost:5173"
 ]
 
 app.add_middleware(
