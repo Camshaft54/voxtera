@@ -11,7 +11,7 @@ function OutputPane({transcription}: OutputPaneProps) {
         <Card sx={{width: 700}}>
             <CardContent orientation="horizontal">
                 <div>
-                    <Typography sx={{fontSize: 'lg', fontWeight: 'lg'}}>{transcription}</Typography>
+                    <Typography sx={{fontSize: 'sm'}}>{transcription}</Typography>
                 </div>
             </CardContent>
         </Card>
