@@ -1,6 +1,7 @@
 import {ChangeEvent, Component} from 'react'
 import './App.css'
 import {sendAudio} from "./lib/api.ts";
+import OutputPane from "./components/OutputPane.tsx";
 
 class App extends Component {
     state = {
@@ -24,17 +25,6 @@ class App extends Component {
         this.setState({transcript: text})
     }
 
-    transcription = () => {
-        if (this.state.transcript) {
-            return (
-                <>
-                    <p>Transcription complete!</p>
-                    <p>{this.state.transcript}</p>
-                </>
-            )
-        }
-    }
-
     render() {
         return (
             <div>
@@ -43,7 +33,7 @@ class App extends Component {
                     <input type="file" onChange={this.onFileSelect}/>
                     <button onClick={this.onTranscribe}>Transcribe!</button>
                 </div>
-                {this.transcription()}
+                { this.state.transcript ? <OutputPane transcription={this.state.transcript} /> : null }
             </div>
         )
     }
