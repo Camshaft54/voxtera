@@ -1,6 +1,6 @@
 ---
 services:
-  voxtera-backend:
+  backend:
     image: voxtera-backend:v1
     environment:
       USE_CUDA: true
@@ -15,7 +15,7 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-  voxtera-frontend:
+  frontend:
     image: voxtera-frontend:v1
     environment:
       VITE_API_ROOT_URL: "http://localhost:8000"
@@ -25,7 +25,7 @@ services:
     networks:
       - voxtera_network
     depends_on:
-      - voxtera-backend
+      - backend
 
 networks:
   voxtera_network:

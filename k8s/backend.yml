@@ -21,7 +21,8 @@ spec:
           ports:
             - containerPort: 8000
           env:
-            - USE_CUDA: true
+            - name: USE_CUDA
+              value: "true"
 ---
 apiVersion: v1
 kind: Service
