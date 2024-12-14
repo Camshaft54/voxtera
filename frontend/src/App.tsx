@@ -5,6 +5,8 @@ import OutputPane from "./components/OutputPane.tsx";
 import LoadingButton from '@mui/lab/LoadingButton';
 import {Button} from "@mui/joy";
 
+const allowedFileTypes = ["audio/mp3", "audio/wav"]
+
 class App extends Component {
     state = {
         selectedFile: null,
@@ -40,7 +42,7 @@ class App extends Component {
         return (
             <div>
                 <h1>Voxtera</h1>
-                <div><input type="file" onChange={this.onFileSelect}/></div>
+                <div><input type="file" accept={allowedFileTypes.join(",")} onChange={this.onFileSelect}/></div>
                 <br></br>
                 <div><Button onClick={this.onTranscribe}>Transcribe!</Button></div>
                 <br></br>
